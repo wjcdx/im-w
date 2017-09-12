@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<script type="text/javascript" src="js/util.js"></script>
+<script type="text/javascript" src="js/clm/corpus.js"></script>
+<script type="text/javascript" src="js/clm/clm.js"></script>
+<script type="text/javascript" src="js/pattern.js"></script>
+<script type="text/javascript" src="js/stroke.js"></script>
+<script type="text/javascript" src="js/generated/partial_no.js"></script>
+<script type="text/javascript" src="js/generated/partial_nv.js"></script>
+<script type="text/javascript" src="js/partial.js"></script>
+<script type="text/javascript" src="js/xh/n/keymap.js"></script>
+<script type="text/javascript" src="js/xh/n/im.js"></script>
+<script type="text/javascript" src="js/charset.js"></script>
+<script type="text/javascript">
+function getInputKeys()
+{
+	return document.getElementById("input").value;
+}
+
+function setKeysNumber(number)
+{
+	document.getElementById("keys_number").innerHTML = number;
+}
+
+function setCandidates(candidates)
+{
+    var input_number = document.getElementById("candidate_number");
+    input_number.value = candidates.length;
+
+    var chars = "";
+    candidates.forEach(function (c) {
+        if (c instanceof Array) {
+            c.forEach(function (t) {
+                chars += t.char;
+            });
+            chars += " ";
+        } else {
+            chars += c.char + " ";
+        }
+    });
+
+    var input_candidates = document.getElementById("candidate_list");
+    input_candidates.value = chars;
+}
+
+function keys_change()
+{
+    var keys = getInputKeys().toUpperCase();
+    setKeysNumber(keys.length);
+
+    var im = new InputMethod(Characters, keymap, clm);
+    var candidates = im.filter(keys);
+    setCandidates(candidates);
+}
+</script>
+
+</head>
+
+<body>
+	Input: <input type="text" id='input' onkeyup="keys_change()"> &nbsp;&nbsp;<span id="keys_number">0</span><br /><br />
+	Candidates: <br />
+	Number: <input type="text" id='candidate_number'><br />
+	<textarea  id="candidate_list" title="candidate list" rows="50" cols="80">
+	</textarea>
+</body>
+
+</html>
+

@@ -1,0 +1,37 @@
+/* Don't EDIT, It's auto generated! */
+
+var stroke_nv = new Array();
+
+stroke_nv = {
+	1: "heng",
+	2: "ti",
+	3: "shu",
+	4: "pie",
+	5: "na",
+	6: "dian",
+	7: "zhe",
+	8: "hengzheshu",
+	9: "hengzhepie",
+	10: "henggou",
+	11: "shuzheheng",
+	12: "shugou",
+	13: "shuzheti",
+	14: "piezheheng",
+	15: "piezhedian",
+	16: "wanshugou",
+	17: "nagou",
+	18: "hengzheshuzheheng",
+	19: "hengzheshuzheti",
+	20: "hengzheshugou",
+	21: "hengzhenagou",
+	22: "shuzhehengzheshu",
+	23: "shuzhehengzhepie",
+	24: "shuwanhenggou",
+	25: "hengzheshuzhehengzheshu",
+	26: "hengzheshuzhehengzhepie",
+	27: "hengzheshuwanhenggou",
+	28: "hengzhepiezhewanshugou",
+	29: "shuzhehengzheshugou",
+	30: "hengzheshuzhehengzheshugou",
+	31: "liaheng",
+}
