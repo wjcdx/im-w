@@ -145,14 +145,12 @@ InputMethod.prototype._word_clm = function (chars) {
         if (cs.length === 0) {
             words = [];
         }
-
         if (index === 0) {
             cs.forEach(function (c) {
                 words.push([c]);
             });
             return;
         }
-
         var ws = [];
         words.forEach(function (word) {
             // 1. filter cs with clm next chars of previous char
@@ -184,14 +182,12 @@ InputMethod.prototype._word_suggest = function (chars) {
         if (cs.length === 0) {
             words = [];
         }
-
         if (index === 0) {
             cs.forEach(function (c) {
                 words.push([c]);
             });
             return;
         }
-
         var ws = [];
         words.forEach(function (word) {
             // 1. concat this char
@@ -205,52 +201,10 @@ InputMethod.prototype._word_suggest = function (chars) {
 };
 
 InputMethod.prototype.word = function (chars) {
-    return this._word_clm(chars).concat(this._word_suggest(chars));
+    return this._word_clm(chars)
 };
 
-InputMethod.prototype._words = function (keys) {
-    var _words = [];
-
-    // heuristic rules
-    var _two_char_words = function (keys) {
-        var __words = [];
-        for (var i = 1; i < keys.length; i++) {
-            var _word = [keys.substring(0, i), keys.substring(i)];
-            __words.push_unique(_word);
-        }
-        return __words;
-    };
-    // _words = _words.concat(_two_char_words(keys));
-
-    var _each_key_a_char = function (keys) {
-        var _word = [];
-        for (var i = 0; i < keys.length; i++) {
-            _word.push([keys.charAt(i)].join(''));
-        }
-        return [ _word ];
-    };
-    // if (keys.length > 2) {
-    //     _words = _words.concat(_each_key_a_char(keys));
-    // }
-
-    var _split_with_end_sign = function (keys) {
-        var _word = [];
-        var _char = [];
-        for (var i = 0; i < keys.length; i++) {
-            var key = keys.charAt(i);
-            _char.push(key);
-            if (i === keys.length - 1 ||
-                this.keymap.end(key)) {
-                _word.push(_char.join(''));
-                _char = [];
-            }
-        }
-        return [ _word ];
-    };
-    // if (keys.length > 3) {
-    //     _words = _words.concat(_split_with_end_sign(keys));
-    // }
-
+InputMethod.prototype._combination = function (keys) {
     // ALL combinations:
     // We cannot predict user combinations correctly.
     // This is a lazy and stupid solution, but effective.
@@ -260,13 +214,11 @@ InputMethod.prototype._words = function (keys) {
             words.push_unique(word.concat(keys.split('')));
             return;
         }
-
         // now we come to the last char
         if (number === 1) {
             words.push_unique(word.concat([keys]));
             return;
         }
-
         // 5 keys split into 2 combinations:
         // keys: KKKKK
         // numb: LLL12
@@ -285,9 +237,8 @@ InputMethod.prototype._words = function (keys) {
         }
         return __words;
     };
-    _words = _words.concat(_all_combinations(keys));
 
-    return _words
+    return _all_combinations(keys);
 };
 
 InputMethod.prototype.filter = function (keys) {
@@ -299,8 +250,8 @@ InputMethod.prototype.filter = function (keys) {
     var ws = [];
     // if (true)
     {
-        this._words(keys).forEach(function (_word) {
-            ws = ws.concat(that.word(_word));
+        this._combination(keys).forEach(function (_comb) {
+            ws = ws.concat(that.word(_comb));
         });
     }
     return cs.concat(ws);
